@@ -1,0 +1,26 @@
+# Core framework
+Django==5.0
+
+# REST API
+djangorestframework==3.15
+
+# Real-time WebSockets
+channels==4.0
+channels-redis==4.2
+
+# Database (PostgreSQL driver)
+psycopg2-binary==2.9
+
+# Authentication helpers (optional but useful)
+djangorestframework-simplejwt==5.3
+
+# Environment variable management
+python-decouple==3.8
+
+# Task queue (optional, for background aggregation)
+celery==5.3
+redis==5.0
+
+# Developer tools
+django-cors-headers==4.3
+django-environ==0.11
