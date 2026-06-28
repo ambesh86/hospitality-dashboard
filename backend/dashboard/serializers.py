@@ -1,0 +1,22 @@
+from rest_framework import serializers
+from .models import Venue, Transaction, TransactionItem
+
+class TransactionItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TransactionItem
+        fields = ["item_id", "name", "qty", "price"]
+
+
+class TransactionSerializer(serializers.ModelSerializer):
+    items = TransactionItemSerializer(many=True)
+
+    class Meta:
+        model = Transaction
+        fields = ["venue", "transaction_id", "timestamp", "type", "total", "staff_id", "items"]
+
+    def create(self, validated_data):
+        items_data = validated_data.pop("items")
+        transaction = Transaction.objects.create(**validated_data)
+        for item in items_data:
+            TransactionItem.objects.create(transaction=transaction, **item)
+        return transaction
