@@ -81,7 +81,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "hospitality_db",
         "USER": "postgres",
-        "PASSWORD": "password",
+        "PASSWORD": "Postgre123",
         "HOST": "localhost",
         "PORT": "5432",
     }
