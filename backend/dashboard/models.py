@@ -32,10 +32,12 @@ class Transaction(models.Model):
 
 class TransactionItem(models.Model):
     transaction = models.ForeignKey(Transaction, on_delete=models.CASCADE, related_name="items")
-    item_id = models.CharField(max_length=100)
-    name = models.CharField(max_length=255)
-    qty = models.PositiveIntegerField()
+    item_id = models.IntegerField()
+    name = models.CharField(max_length=100)
+    qty = models.IntegerField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
         return f"{self.name} x {self.qty}"
+    
+

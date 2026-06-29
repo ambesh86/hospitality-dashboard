@@ -20,3 +20,13 @@ class TransactionSerializer(serializers.ModelSerializer):
         for item in items_data:
             TransactionItem.objects.create(transaction=transaction, **item)
         return transaction
+
+    
+
+class VenueSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Venue
+        fields = ["id", "name", "location"]
+
+
+
