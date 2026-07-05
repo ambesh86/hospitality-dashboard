@@ -1,38 +1,40 @@
 import React, { useEffect, useState } from "react";
-import SalesSummary from "./SalesSummary";
-import TopItems from "./TopItems";
-import AlertsPanel from "./AlertsPanel";
-import VenueModal from "./VenueModal";
-
+import axios from "axios";
 
 function Dashboard() {
-  const [salesData, setSalesData] = useState([]);
+  const [venueSales, setVenueSales] = useState([]);
   const [topItems, setTopItems] = useState([]);
-  const [alerts, setAlerts] = useState([]);
-  const [selectedVenue, setSelectedVenue] = useState(null);
 
   useEffect(() => {
-    const socket = new WebSocket("ws://localhost:8000/ws/dashboard/");
+    axios.get("http://127.0.0.1:8000/api/transactions/venue-sales/")
+      .then(res => setVenueSales(res.data))
+      .catch(err => console.error(err));
 
-    socket.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      if (data.sales) setSalesData(data.sales);
-      if (data.top_items) setTopItems(data.top_items);
-      if (data.alerts) setAlerts(data.alerts);
-    };
-
-    return () => socket.close();
+    axios.get("http://127.0.0.1:8000/api/transactions/top-items/")
+      .then(res => setTopItems(res.data))
+      .catch(err => console.error(err));
   }, []);
 
   return (
-    <div className="dashboard">
+    <div>
       <h1>Ops Dashboard</h1>
-      <SalesSummary sales={salesData} onVenueClick={setSelectedVenue} />
-      <TopItems items={topItems} />
-      <AlertsPanel alerts={alerts} />
-      {selectedVenue && (
-        <VenueModal venue={selectedVenue} onClose={() => setSelectedVenue(null)} />
-      )}
+
+      <h2>Total Sales by Venue</h2>
+      <ul>
+        {venueSales.map(v => (
+          <li key={v.venue__name}>{v.venue__name}: ₹{v.total_sales}</li>
+        ))}
+      </ul>
+
+      <h2>Top Selling Items</h2>
+      <ul>
+        {topItems.map(i => (
+          <li key={i.item__name}>{i.item__name}: {i.total_sold}</li>
+        ))}
+      </ul>
+
+      <h2>Alerts</h2>
+      <p>No issues detected</p>
     </div>
   );
 }

@@ -1,10 +1,15 @@
 from rest_framework import serializers
-from .models import Venue, Transaction, TransactionItem
+from .models import Venue, Transaction, TransactionItem,Item
+
+class ItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Item
+        fields = ["id", "name", "price"]
 
 class TransactionItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = TransactionItem
-        fields = ["item_id", "name", "qty", "price"]
+        fields = '__all__'
 
 
 class TransactionSerializer(serializers.ModelSerializer):
