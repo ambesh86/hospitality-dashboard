@@ -29,7 +29,10 @@ class Transaction(models.Model):
     def __str__(self):
         return f"{self.venue.name} - {self.transaction_id}"
 
-
+class Item(models.Model):
+    name = models.CharField(max_length=100)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+                                
 class TransactionItem(models.Model):
     transaction = models.ForeignKey(Transaction, on_delete=models.CASCADE, related_name="items")
     item_id = models.IntegerField()

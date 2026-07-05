@@ -1,5 +1,5 @@
 # Hospitality Dashboard
-
+##Please follow the below steps for set up and configuration
 ## Setup
 
 ### Backend
